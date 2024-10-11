@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cpxv7pkfdstcc"]
+
+[ext_resource type="Shader" path="res://shaders/distortion_shader.gdshader" id="1_43j1k"]
+
+[resource]
+shader = ExtResource("1_43j1k")

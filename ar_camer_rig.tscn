@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://bilo6mqrduplr"]
+
+[ext_resource type="Material" uid="uid://cpxv7pkfdstcc" path="res://shaders/distortion_shader_material.tres" id="1_0n3o0"]
+[ext_resource type="Script" path="res://scripts/CalibrationLoader.gd" id="1_gj1v2"]
+[ext_resource type="Material" uid="uid://cs1okp1pc1dv" path="res://shaders/postprocess_shader_material.tres" id="2_xpbug"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1isag"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q2m11"]
+albedo_color = Color(0.855521, 0, 0.0649854, 1)
+
+[node name="ARCamerRig" type="XROrigin3D"]
+
+[node name="LeftEyeViewport" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Viewport" type="SubViewport" parent="LeftEyeViewport"]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="CameraLeft" type="Camera3D" parent="LeftEyeViewport"]
+
+[node name="TextureRect" type="TextureRect" parent="LeftEyeViewport"]
+material = ExtResource("1_0n3o0")
+layout_mode = 2
+
+[node name="RightEyeViewport" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Viewport" type="SubViewport" parent="RightEyeViewport"]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="CameraRight" type="Camera3D" parent="RightEyeViewport"]
+
+[node name="TextureRect" type="TextureRect" parent="RightEyeViewport"]
+material = ExtResource("1_0n3o0")
+layout_mode = 2
+
+[node name="PostProcessViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 512.0
+offset_bottom = 512.0
+
+[node name="Viewport" type="SubViewport" parent="PostProcessViewportContainer"]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="PostProcessViewportContainer"]
+material = ExtResource("2_xpbug")
+layout_mode = 2
+
+[node name="XRCamera3D" type="XRCamera3D" parent="."]
+current = true
+
+[node name="CalibrationLoader" type="Node" parent="."]
+script = ExtResource("1_gj1v2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+mesh = SubResource("BoxMesh_1isag")
+surface_material_override/0 = SubResource("StandardMaterial3D_q2m11")
